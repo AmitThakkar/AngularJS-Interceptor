@@ -12,7 +12,7 @@
                 console.log("Success returned");
             })
     }]);
-    interceptorModule.factory('intercep', ["$q", function ($q) {
+    interceptorModule.factory('interceptor1', ["$q", function ($q) {
         console.log("Interceptor1 initializing.");
         var interceptor = {
             request: function (config) {
@@ -24,12 +24,12 @@
                 }, 100);
                 return deferred.promise;
             },
-            response: function (respnse) {
+            response: function (response) {
                 console.log("Executing after response of interceptor1");
                 var deferred = $q.defer();
                 setTimeout(function () {
                     console.log("Executed after response of interceptor1");
-                    deferred.resolve(respnse);
+                    deferred.resolve(response);
                 }, 100);
                 return deferred.promise;
             }
@@ -38,27 +38,24 @@
     }]);
     interceptorModule.service('interceptor2', ["$q", function ($q) {
         console.log("Interceptor2 initializing.");
-        var interceptor = {
-            request: function (config) {
-                console.log("Executing before request of interceptor2");
-                var deferred = $q.defer();
-                setTimeout(function () {
-                    console.log("Executed before request of interceptor2");
-                    deferred.resolve(config);
-                }, 100);
-                return deferred.promise;
-            },
-            response: function (respnse) {
-                console.log("Executing after response of interceptor2");
-                var deferred = $q.defer();
-                setTimeout(function () {
-                    console.log("Executed after response of interceptor2");
-                    deferred.resolve(respnse);
-                }, 100);
-                return deferred.promise;
-            }
+        this.request = function (config) {
+            console.log("Executing before request of interceptor2");
+            var deferred = $q.defer();
+            setTimeout(function () {
+                console.log("Executed before request of interceptor2");
+                deferred.resolve(config);
+            }, 100);
+            return deferred.promise;
         };
-        return interceptor;
+        this.response = function (respnse) {
+            console.log("Executing after response of interceptor2");
+            var deferred = $q.defer();
+            setTimeout(function () {
+                console.log("Executed after response of interceptor2");
+                deferred.resolve(respnse);
+            }, 100);
+            return deferred.promise;
+        }
     }]);
     interceptorModule.config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push('interceptor1');
