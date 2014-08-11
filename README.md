@@ -1,7 +1,7 @@
 AngularJS-Interceptor
 =====================
 
-This repository for containing **Angular Interceptor** DEMO.
+This is repository for containing **Angular Interceptor** DEMO.
 
 When we are working on **AngularJS** then **AngularJS**'s core service **$http** helps us to communicate with remote HTTP Server via ajax request. Lets first see a small demo of **$http** service then will understand the concept of **interceptor**.
 
@@ -133,13 +133,13 @@ Above way is nice to achieve the interceptor behavior. But few things, which I d
             return deferred.promise;
         };
         // defining a method, which will call after response received.
-        this.response = function (respnse) {
+        this.response = function (response) {
             console.log("Executing after response of interceptor2");
             // If you want to do some async work after response received then use $q service and return promise.
             var deferred = $q.defer();
             setTimeout(function () {
                 console.log("Executed after response of interceptor2");
-                deferred.resolve(respnse);
+                deferred.resolve(response);
             }, 100);
             return deferred.promise;
         }
@@ -153,4 +153,10 @@ Above way is nice to achieve the interceptor behavior. But few things, which I d
 })();
 ```
 
+Now run the application and open console, you will see some log messages as shown in image :
 
+![output.png](https://raw.githubusercontent.com/AmitThakkar/AngularJS-Interceptor/master/images/output.png)
+
+We can see that when we hit a request then request method invokes first for all the interceptors in that order which they have to push into **$httpProvider.interceptors**. And response method invokes after response received for all the interceptors in reverse order of request method. After using interceptor functionality we can add as many interceptor as we want and our controllers/module will be independent from our interceptor logic.
+
+**Note**: You can checkout full working source code from this [link](https://github.com/AmitThakkar/AngularJS-Interceptor)

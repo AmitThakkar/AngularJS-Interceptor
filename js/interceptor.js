@@ -49,13 +49,13 @@
             return deferred.promise;
         };
         // defining a method, which will call after response received.
-        this.response = function (respnse) {
+        this.response = function (response) {
             console.log("Executing after response of interceptor2");
             // If you want to do some async work after response received then use $q service and return promise.
             var deferred = $q.defer();
             setTimeout(function () {
                 console.log("Executed after response of interceptor2");
-                deferred.resolve(respnse);
+                deferred.resolve(response);
             }, 100);
             return deferred.promise;
         }
