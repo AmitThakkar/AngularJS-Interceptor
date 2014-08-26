@@ -3,24 +3,24 @@ AngularJS-Interceptor
 
 This is repository for containing **Angular Interceptor** DEMO.
 
-When we are working on **AngularJS** then **AngularJS**'s core service **$http** helps us to communicate with remote HTTP Server via ajax request. Lets first see a small demo of **$http** service then will understand the concept of **interceptors**.
+When we are working on **AngularJS** then **AngularJS**'s core service **$http** helps us to communicate with remote HTTP Server via ajax request. Let's first see a small demo of **$http** service then we will move to the concept of **interceptors**.
 
 ```javascript
 // $http service injecting to Controller via DI.
 interceptorModule.controller("InterceptorController", ["$http", function ($http) {
     // Defining successHandler for success status.
     function successHandler(data, status, headers, config) {
-        // This will called asynchronously when response will come with success status.
+        // This will be called asynchronously when response will come with success status.
     }
 
     // Defining errorHandler for error status.
     function errorHandler(data, status, headers, config) {
-        // This will called asynchronously when response will come with error status.
+        // This will be called asynchronously when response will come with error status.
     }
 
     // Hitting get request on someUrl and providing successHandler in success function
-    // and errorHandler in error function. successHandler will call when response come 
-    // with success status and errorHandler will call when response come with error status.
+    // and errorHandler in error function. successHandler will be called when response will come
+    // with success status and errorHandler will be called when response will come with error status.
     $http({method: 'GET', url: '/someUrl'})
         .success(successHandler)
         .error(errorHandler);
@@ -42,7 +42,7 @@ $http({method: 'GET', url: '/someUrl2', headers: {Authorization: 'token'}})
     });
 ```
 
-And now suppose response is coming into XML/JSON format, and we have to parse each and every response and if we get unauthorized response error then we have to redirect/open to login page. Then might be you think to write a custom **service** for this e.g.
+And now suppose response is coming into XML/JSON format, and we have to parse each and every response and if we get unauthorized response error then we have to redirect/open to login page, then you might be thinking to write a custom **service** for this e.g.
 
 ```javascript
 interceptorModule.service('CustomRequestService', ["$http", function ($http) {
@@ -63,9 +63,9 @@ interceptorModule.service('CustomRequestService', ["$http", function ($http) {
 Above way is nice to achieve the interceptor behavior. But few things, which I don't like about this. There can be many, but I am listing down few of them, e.g.
 - We have to consume CustomRequestService in all the places instead of **$http service**. 
 - Suppose my parsing logic takes 4 steps so I have to put all 4 steps into this single service/place.
-- We can not make independent module, which communicate with **$http service**. etc.
+- We cannot make independent module, which communicates with **$http service**. etc.
 
-**AngularJS** provide us functionality to write **interceptors**. Lets first try small interceptor example:
+**AngularJS** provides us functionality to write **interceptors**. Let's first try small interceptor example:
 
 **angular-interceptor.html**
 ```html
@@ -101,13 +101,13 @@ Above way is nice to achieve the interceptor behavior. But few things, which I d
         console.log("Interceptor1 initializing.");
         // defining interceptor configuration.
         var interceptor = {
-            // defining a method, which will call before sending the request.
+            // defining a method, which will be called before sending the request.
             request: function (config) {
                 // attaching token/jsessionid code will come here.
                 console.log("Executing before request of interceptor1");
                 return config;
             },
-            // defining a method, which will call after response received.
+            // defining a method, which will be called after response received.
             response: function (response) {
                 // parsing the response logic will come here.
                 console.log("Executing after response of interceptor1");
@@ -121,7 +121,7 @@ Above way is nice to achieve the interceptor behavior. But few things, which I d
     interceptorModule.service('interceptor2', ["$q", function ($q) {
         // defining interceptor configuration.
         console.log("Interceptor2 initializing.");
-        // defining a method, which should will call before sending the request.
+        // defining a method, which should will be called before sending the request.
         this.request = function (config) {
             console.log("Executing before request of interceptor2");
             // If you want to do some async work before sending the request then use $q service and return promise.
@@ -132,7 +132,7 @@ Above way is nice to achieve the interceptor behavior. But few things, which I d
             }, 100);
             return deferred.promise;
         };
-        // defining a method, which will call after response received.
+        // defining a method, which will be called after response received.
         this.response = function (response) {
             console.log("Executing after response of interceptor2");
             // If you want to do some async work after response received then use $q service and return promise.
@@ -157,8 +157,8 @@ Now run the application and open console, you will see some log messages as show
 
 ![output.png](https://raw.githubusercontent.com/AmitThakkar/AngularJS-Interceptor/master/images/output.png)
 
-We can see that when we hit a request then request method invokes first for all the interceptors in that order which they have to push into **$httpProvider.interceptors**. And response method invokes after response received for all the interceptors in reverse order of request method. After seeing this interceptor functionality we can say that we can add as many interceptor as we want and our controllers/module will be independent from our interceptor logic.
+We can see that when we hit a request then request method invokes first for all the interceptors in that order which they have been pushed into **$httpProvider.interceptors**. And response method invokes after response received for all the interceptors in reverse order of request method. After seeing this interceptor functionality we can say that we can add as many interceptors as we want and our controllers/module will be independent from our interceptor logic.
 
-**AngularJS Interceptor** have two more function/methods in interceptor configuration: **requestError** and **responseError**, Some time our **interceptor's request** method reject the request on some condition, then **requestError** function will call. It can be used to undo some work etc while **responseError** invokes when backend request fails.
+**AngularJS Interceptor** have two more function/methods in interceptor configuration: **requestError** and **responseError**, If our **interceptor's request** method rejects the request on some condition, then **requestError** function will be called. It can be used to undo some work etc while **responseError** invoked when backend request fails.
 
 **Note**: You can checkout full working source code from this [link](https://github.com/AmitThakkar/AngularJS-Interceptor).
