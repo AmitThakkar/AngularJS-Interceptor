@@ -1,4 +1,4 @@
-AngularJS-Interceptor
+AngularJS Interceptor
 =====================
 
 This is repository for containing **Angular Interceptor** DEMO.
