@@ -161,4 +161,12 @@ We can see that when we hit a request then request method invokes first for all 
 
 **AngularJS Interceptor** have two more function/methods in interceptor configuration: **requestError** and **responseError**, If our **interceptor's request** method rejects the request on some condition, then **requestError** function will be called. It can be used to undo some work etc while **responseError** invoked when backend request fails.
 
-**Note**: You can checkout full working source code from this [link](https://github.com/AmitThakkar/AngularJS-Interceptor).
+Follow Me
+---
+[Github](https://github.com/AmitThakkar)
+
+[Twitter](https://twitter.com/amit_thakkar01)
+
+[LinkedIn](https://in.linkedin.com/in/amitthakkar01)
+
+[More Blogs By Me](http://amitthakkar.github.io/)
